@@ -2,16 +2,22 @@
 import { basicSetup, EditorView } from 'codemirror'
 import { json }  from '@codemirror/lang-json'
 import { EditorState } from '@codemirror/state'
+import { oneDark } from '@codemirror/theme-one-dark'
 
 export default {
   props: {
     modelValue: { // String = JSON string, other = Object | Array ...
     },
-    theme: { // light = default, dark = OneDark
-      type: String
-    },
     readonly: { // true = readOnly
       type: Boolean,
+      default: false
+    },
+    dark: { // true = dark theme, false = light theme
+      type: Boolean,
+      default: false
+    },
+    format: { // true = pretty print, false = compact, Function = custom formatter
+      type: [Boolean, Function],
       default: false
     },
     codec: { // true = [JSON.stringify, JSON.parse], Array = [stringify, parse]
@@ -21,16 +27,21 @@ export default {
   },
   emits: ['update:modelValue', 'change', 'error'],
   mounted() {
+    // extensions
+    const extensions = [
+      basicSetup,
+      json(),
+      EditorState.readOnly.of(this.readonly)
+    ]
+    if (this.dark) extensions.push(oneDark)
+
     const editor = new EditorView({
+      extensions,
       doc: this.modelValue,
       parent: this.$refs.jsonEditor,
-      extensions: [
-        basicSetup,
-        json(),
-        EditorState.readOnly.of(this.readonly)
-      ],
       ...this.$attrs
     })
+
     editor.contentDOM.onblur = () => {
       const doc = editor.state.doc.toString()
       this.$emit('update:modelValue', doc)

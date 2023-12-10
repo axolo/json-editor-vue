@@ -7,12 +7,16 @@ export default {
   },
   data() {
     return {
-      json: null
+      json: JSON.stringify({
+        required: true,
+        message: 'please input content'
+      }, null, 2)
     }
   },
   methods: {
     change(json) {
-      console.log(json)
+      console.log('string', json)
+      console.log('parse:', JSON.parse(json))
     }
   }
 }
