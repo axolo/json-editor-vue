@@ -1,6 +1,6 @@
 # @axolo/json-editor-vue
 
-A Simple JSON Editor of Vue.
+A simple JSON Editor of Vue.
 
 ## Install
 

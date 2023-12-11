@@ -1,4 +1,5 @@
 <script>
+// import JsonEditor from '../dist' // test npm publish
 import JsonEditor from './components/json-editor.vue'
 
 export default {
