@@ -7,16 +7,10 @@ export default {
   },
   data() {
     return {
-      json: JSON.stringify({
+      json: {
         required: true,
         message: 'please input content'
-      }, null, 2)
-    }
-  },
-  methods: {
-    change(json) {
-      console.log('string', json)
-      console.log('parse:', JSON.parse(json))
+      }
     }
   }
 }
@@ -24,20 +18,21 @@ export default {
 
 <template>
   <div>
-    <h3>json-editor-vue</h3>
+    <h3>@axolo/json-editor-vue</h3>
     <json-editor
       v-model="json"
       class="json-editor"
-      placeholder="json-editor-vue"
-      @change="change"
+      codec
+      dark
+      @change="console.log"
+      @error="console.error"
     />
-    <p>{{ JSON.parse(json) }}</p>
+    <p>{{ json }}</p>
   </div>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 .json-editor {
-  border: 1px solid #eee;
-  border-radius: 0.25em;
+  border-radius: 0.25em !important;
 }
 </style>

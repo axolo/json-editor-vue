@@ -6,61 +6,80 @@ import { oneDark } from '@codemirror/theme-one-dark'
 
 export default {
   props: {
-    modelValue: { // String = JSON string, other = Object | Array ...
+    modelValue: { // JSON string, object, array ...
     },
-    readonly: { // true = readOnly
+    readonly: { // true = EditorState.readOnly.of(true)
       type: Boolean,
+      default: false
+    },
+    codec: { // true = [JSON.stringify, JSON.parse], Array = [decode, encode]
+      type: [Boolean, Array],
       default: false
     },
     dark: { // true = dark theme, false = light theme
       type: Boolean,
       default: false
     },
-    format: { // true = pretty print, false = compact, Function = custom formatter
+    format: { // true = pretty, false = keep it, Function = custom
       type: [Boolean, Function],
-      default: false
-    },
-    codec: { // true = [JSON.stringify, JSON.parse], Array = [stringify, parse]
-      type: [Boolean, Array],
       default: false
     }
   },
   emits: ['update:modelValue', 'change', 'error'],
+  data() {
+    return {
+      editor: null
+    }
+  },
+  // watch: {
+  //   modelValue(value) {
+  //     this.editor?.destroy()
+  //     this.init(value)
+  //   }
+  // },
   mounted() {
-    // extensions
-    const extensions = [
-      basicSetup,
-      json(),
-      EditorState.readOnly.of(this.readonly)
-    ]
-    if (this.dark) extensions.push(oneDark)
+    this.init(this.modelValue)
+  },
+  methods: {
+    init(value) {
+      try {
+        const doc = this.codec === true ? JSON.stringify(value, null, 2) : value
 
-    const editor = new EditorView({
-      extensions,
-      doc: this.modelValue,
-      parent: this.$refs.jsonEditor,
-      ...this.$attrs
-    })
+        const extensions = [
+          basicSetup,
+          json(),
+          EditorState.readOnly.of(this.readonly)
+        ]
 
-    editor.contentDOM.onblur = () => {
-      const doc = editor.state.doc.toString()
-      this.$emit('update:modelValue', doc)
-      this.$emit('change', doc)
+        if (this.dark) {
+          extensions.push(oneDark)
+        }
+
+        this.editor = new EditorView({
+          extensions,
+          doc,
+          parent: this.$refs.jsonEditor,
+          ...this.$attrs
+        })
+
+        this.editor.contentDOM.onblur = () => {
+          try {
+            const doc = this.editor.state.doc.toString()
+            const val = this.codec === true ? JSON.parse(doc) : doc
+            this.$emit('update:modelValue', val)
+            this.$emit('change', val)
+          } catch (error) {
+            this.$emit('error', error)
+          }
+        }
+      } catch(error) {
+        this.$emit('error', error)
+      }
     }
   }
 }
 </script>
 
 <template>
-  <div ref="jsonEditor" class="axolo-json-editor-vue" />
+  <div ref="jsonEditor" class="axolo-json-editor" />
 </template>
-
-<style lang="scss" scoped>
-.axolo-json-editor-vue {
-  .cm-editor {
-    .cm-content {
-      font-family: Consolas, 'Courier New', Courier, monospace !important;
-    }
-  }
-}
-</style>

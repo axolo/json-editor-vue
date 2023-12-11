@@ -4,16 +4,19 @@
   "description": "A Simple JSON Editor of Vue",
   "author": "Yueming Fang",
   "license": "MIT",
-  "private": true,
-  "type": "module",
   "keywords": [
     "json editor",
     "json editor vue",
     "vue json editor"
   ],
-  "files": [
-    "dist"
-  ],
+  "homepage": "https://github.com/axolo/json-editor-vue#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/axolo/json-editor-vue.git"
+  },
+  "type": "module",
+  "main": "dist/index.js",
+  "files": ["dist"],
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -23,17 +26,12 @@
     "@codemirror/lang-json": "^6.0.1",
     "@codemirror/state": "^6.3.3",
     "@codemirror/theme-one-dark": "^6.1.2",
-    "codemirror": "^6.0.1",
-    "vue": "^3.3.8"
+    "codemirror": "^6.0.1"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^4.5.0",
+    "@vitejs/plugin-vue": "^4.5.2",
     "sass": "^1.69.5",
-    "vite": "^5.0.0"
-  },
-  "homepage": "https://github.com/axolo/json-editor-vue#readme",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/axolo/json-editor-vue.git"
+    "vite": "^5.0.7",
+    "vue": "^3.3.11"
   }
 }
