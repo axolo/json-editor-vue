@@ -18,13 +18,13 @@ export default {
 </script>
 
 <template>
-  <div>
+  <div class="json-editor">
     <h3>@axolo/json-editor-vue</h3>
     <json-editor
       v-model="json"
-      class="json-editor"
       codec
       dark
+      placeholder="please input json"
       @change="console.log"
       @error="console.error"
     />
@@ -32,8 +32,16 @@ export default {
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .json-editor {
-  border-radius: 0.25em !important;
+  .cm-editor {
+    border: 1px solid #eee;
+    border-radius: 0.25em;
+    .cm-scroller {
+      border-radius: 0.25em;
+      font-family: Consolas, monospace;
+      font-size: 0.9em;
+    }
+  }
 }
 </style>

@@ -1,6 +1,6 @@
 # @axolo/json-editor-vue
 
-A simple JSON Editor of Vue.
+A simple JSON editor of Vue.
 
 ## Install
 
@@ -30,19 +30,37 @@ export default {
 </script>
 
 <template>
-  <json-editor v-model="json" codec dark />
+  <json-editor
+    v-model="json"
+    codec
+    dark
+    placeholder="please input json"
+    @error="console.error"
+  />
 </template>
+
+<style lang="scss">
+.cm-editor {
+  border-radius: 0.25em;
+  .cm-scroller {
+    border-radius: 0.25em;
+    font-size: 0.9em;
+    font-family: Consolas, monospace;
+  }
+}
+</style>
 ```
 
 ## Props
 
-|     Name     |         Type          | Default |          Description           |
-| ------------ | --------------------- | ------- | ------------------------------ |
-| `modelValue` | `any`                 |         | JSON string, object, array ... |
-| `readonly`   | `Boolean`             | `false` | Editor readonly                |
-| `dark`       | `Boolean`             | `false` | dark theme                     |
-| `codec`      | `[Boolean, Array]`    | `false` | See [codec](#codec)            |
-| `format`     | `[Boolean, Function]` | `false` | See [format](#format) (TODO)   |
+|     Name      |         Type          | Default |          Description           |
+| ------------- | --------------------- | ------- | ------------------------------ |
+| `modelValue`  | `any`                 |         | JSON string, object, array ... |
+| `placeholder` | `String`              |         | placeholder                    |
+| `readonly`    | `Boolean`             | `false` | readonly                       |
+| `dark`        | `Boolean`             | `false` | dark theme as oneDark          |
+| `codec`       | `[Boolean, Array]`    | `false` | See [codec](#codec)            |
+| `format`      | `[Boolean, Function]` | `false` | See [format](#format) (TODO)   |
 
 ### codec
 

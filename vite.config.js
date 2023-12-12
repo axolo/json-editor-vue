@@ -3,8 +3,8 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 
 export default defineConfig({
-  plugins: [vue()],
   // resolve: { dedupe: ['vue'] }, // https://github.com/vuejs/core/issues/3930
+  plugins: [vue()],
   build: {
 		lib: {
 			entry: fileURLToPath(new URL('./src/components/index.js', import.meta.url)),

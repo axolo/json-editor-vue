@@ -1,7 +1,8 @@
 <script>
-import { basicSetup, EditorView } from 'codemirror'
-import { json }  from '@codemirror/lang-json'
+import { basicSetup } from 'codemirror'
+import { EditorView, placeholder } from '@codemirror/view'
 import { EditorState } from '@codemirror/state'
+import { json }  from '@codemirror/lang-json'
 import { oneDark } from '@codemirror/theme-one-dark'
 
 export default {
@@ -11,6 +12,9 @@ export default {
     readonly: { // true = EditorState.readOnly.of(true)
       type: Boolean,
       default: false
+    },
+    placeholder: {
+      type: String
     },
     codec: { // true = [JSON.stringify, JSON.parse], Array = [decode, encode]
       type: [Boolean, Array],
@@ -44,24 +48,16 @@ export default {
     init(value) {
       try {
         const doc = this.codec === true ? JSON.stringify(value, null, 2) : value
-
-        const extensions = [
+        const parent = this.$refs.axoloJsonEditor
+        const basic = [
           basicSetup,
-          json(),
-          EditorState.readOnly.of(this.readonly)
+          EditorState.readOnly.of(this.readonly),
+          placeholder(this.placeholder),
+          json()
         ]
+        const extensions = this.dark ? [...basic, oneDark] : basic
 
-        if (this.dark) {
-          extensions.push(oneDark)
-        }
-
-        this.editor = new EditorView({
-          extensions,
-          doc,
-          parent: this.$refs.jsonEditor,
-          ...this.$attrs
-        })
-
+        this.editor = new EditorView({ doc, parent, extensions })
         this.editor.contentDOM.onblur = () => {
           try {
             const doc = this.editor.state.doc.toString()
@@ -81,5 +77,5 @@ export default {
 </script>
 
 <template>
-  <div ref="jsonEditor" class="axolo-json-editor" />
+  <div ref="axoloJsonEditor" class="axolo-json-editor" />
 </template>

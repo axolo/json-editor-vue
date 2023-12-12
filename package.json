@@ -1,7 +1,7 @@
 {
   "name": "@axolo/json-editor-vue",
-  "version": "0.1.0",
-  "description": "A Simple JSON Editor of Vue",
+  "version": "0.2.0",
+  "description": "A simple JSON editor of Vue",
   "author": "Yueming Fang",
   "license": "MIT",
   "keywords": [
@@ -16,7 +16,9 @@
   },
   "type": "module",
   "main": "dist/index.js",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -26,6 +28,7 @@
     "@codemirror/lang-json": "^6.0.1",
     "@codemirror/state": "^6.3.3",
     "@codemirror/theme-one-dark": "^6.1.2",
+    "@codemirror/view": "^6.22.2",
     "codemirror": "^6.0.1"
   },
   "devDependencies": {
