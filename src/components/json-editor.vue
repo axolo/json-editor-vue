@@ -32,11 +32,13 @@ export default {
   emits: ['update:modelValue', 'change', 'error'],
   data() {
     return {
+      ref: 'axolo_' + Math.random().toString(36).slice(2),
       editor: null
     }
   },
   // watch: {
   //   modelValue(value) {
+  //     if(!this.editor) return
   //     this.editor?.destroy()
   //     this.init(value)
   //   }
@@ -48,7 +50,7 @@ export default {
     init(value) {
       try {
         const doc = this.codec === true ? JSON.stringify(value, null, 2) : value
-        const parent = this.$refs.axoloJsonEditor
+        const parent = this.$refs[this.ref]
         const basic = [
           basicSetup,
           EditorState.readOnly.of(this.readonly),
@@ -77,5 +79,5 @@ export default {
 </script>
 
 <template>
-  <div ref="axoloJsonEditor" class="axolo-json-editor" />
+  <div :ref="ref" class="axolo-json-editor" />
 </template>
