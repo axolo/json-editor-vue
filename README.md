@@ -66,25 +66,25 @@ export default {
 
 |  Value  |                           Description                           |
 | ------- | --------------------------------------------------------------- |
-| `false` | default, `modelValue` is JSON string                            |
+| `false` | default, do nothing, `modelValue` is JSON string                |
 | `true`  | `[JSON.stringify, JSON.parse]`, `modelValue` is not JSON string |
-| `Array` |  custom codec, Aarray of [encode, decode] (TODO)                |
+| `Array` | custom codec, Aarray of [encode, decode] (TODO)                 |
 
 ### format
 
 |   Value    |           Description           |
 | ---------- | ------------------------------- |
-| `false`    | default                         |
+| `false`    | default, do nothing             |
 | `true`     | `JSON.stringify(json, null, 2)` |
 | `Function` | custom formatter                |
 
 ## Emits
 
-|        Name         | Parameters |       Description        |
-| ------------------- | ---------- | ------------------------ |
-| `update:modelValue` | json       | same type as v-model     |
-| `change`            | json       | same type as v-model     |
-| `error`             | error      | throw message when error |
+|        Name         | Parameters |           Description            |
+| ------------------- | ---------- | -------------------------------- |
+| `update:modelValue` | json       | update modelValue                |
+| `change`            | json       | value of modelValue              |
+| `error`             | error      | throw error or `false` when blur |
 
 > Yueming Fang
 > 2023-12-09

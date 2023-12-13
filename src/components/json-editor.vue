@@ -66,6 +66,7 @@ export default {
             const val = this.codec === true ? JSON.parse(doc) : doc
             this.$emit('update:modelValue', val)
             this.$emit('change', val)
+            this.$emit('error', false)
           } catch (error) {
             this.$emit('error', error)
           }
