@@ -61,6 +61,7 @@ export default {
 | `dark`        | `Boolean`             | `false` | dark theme as oneDark          |
 | `codec`       | `[Boolean, Array]`    | `false` | See [codec](#codec)            |
 | `format`      | `[Boolean, Function]` | `false` | See [format](#format) (TODO)   |
+| `extensions`  | `Array`               | `[]`    | extra codemirror extensions    |
 
 ### codec
 

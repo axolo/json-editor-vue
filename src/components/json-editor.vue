@@ -27,6 +27,10 @@ export default {
     format: { // true = pretty, false = keep it, Function = custom
       type: [Boolean, Function],
       default: false
+    },
+    extensions: { // extensions for codemirror
+      type: Array,
+      default: () => []
     }
   },
   emits: ['update:modelValue', 'change', 'error'],
@@ -57,7 +61,9 @@ export default {
           placeholder(this.placeholder),
           json()
         ]
-        const extensions = this.dark ? [...basic, oneDark] : basic
+        const extensions = this.dark
+          ? [...basic, oneDark, ...this.extensions]
+          : [ ...basic, ...this.extensions ]
 
         this.editor = new EditorView({ doc, parent, extensions })
         this.editor.contentDOM.onblur = () => {
