@@ -8,7 +8,7 @@ export default defineConfig({
   build: {
 		lib: {
 			entry: fileURLToPath(new URL('./src/components/index.js', import.meta.url)),
-			name: '@axolo/json-editor-vue',
+			name: 'AxoloJsonEditor',
 			fileName: 'index'
 		},
     rollupOptions: {
