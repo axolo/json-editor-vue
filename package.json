@@ -1,6 +1,6 @@
 {
   "name": "@axolo/json-editor-vue",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "A simple JSON editor of Vue",
   "author": "Yueming Fang",
   "license": "MIT",
