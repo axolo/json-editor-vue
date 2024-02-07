@@ -96,11 +96,11 @@ export default {
 
 <template>
   <div class="axolo-json-editor">
-    <div :ref="ref" class="editor" />
     <div class="tip">
       <div v-if="placeholder" class="placeholder">{{ placeholder }}</div>
       <div v-if="error" class="error">Error</div>
     </div>
+    <div :ref="ref" class="editor" />
   </div>
 </template>
 
@@ -117,16 +117,17 @@ export default {
   }
   .tip {
     background-color: #eee;
-    padding: 0.25em 0.5em;
-    font-size: small;
+    padding: 0 0.5em;
+    line-height: 2;
+    font-size: 0.85em;
     display: flex;
-    border-bottom-left-radius: 0.25em;
-    border-bottom-right-radius: 0.25em;
+    border-top-left-radius: 0.25em;
+    border-top-right-radius: 0.25em;
     justify-content: space-between;
     align-items: center;
     gap: 1em;
     .placeholder {
-      color: #777;
+      color: #999;
       font-style: italic;
     }
     .error {
