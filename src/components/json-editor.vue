@@ -1,7 +1,5 @@
 <script>
-import { basicSetup } from 'codemirror'
-import { EditorView, placeholder } from '@codemirror/view'
-import { EditorState } from '@codemirror/state'
+import { EditorView, basicSetup } from 'codemirror'
 import { json }  from '@codemirror/lang-json'
 import { oneDark } from '@codemirror/theme-one-dark'
 
@@ -37,47 +35,58 @@ export default {
   data() {
     return {
       ref: 'axolo_' + Math.random().toString(36).slice(2),
-      editor: null
+      editor: null,
+      error: false
     }
   },
-  // watch: {
-  //   modelValue(value) {
-  //     if(!this.editor) return
-  //     this.editor?.destroy()
-  //     this.init(value)
-  //   }
-  // },
+  watch: {
+    modelValue(value) {
+      if(!this.editor) return
+      this.editor.dispatch({
+        changes: {
+          from: 0,
+          to: this.editor.state.doc.length,
+          insert: this.doc(value)
+        }
+      })
+    }
+  },
   mounted() {
     this.init(this.modelValue)
   },
   methods: {
+    doc(doc) {
+      return this.codec === true ? JSON.stringify(doc, null, 2) : doc
+    },
     init(value) {
       try {
-        const doc = this.codec === true ? JSON.stringify(value, null, 2) : value
         const parent = this.$refs[this.ref]
-        const basic = [
-          basicSetup,
-          EditorState.readOnly.of(this.readonly),
-          placeholder(this.placeholder),
-          json()
-        ]
+        const doc = this.doc(value)
         const extensions = this.dark
-          ? [...basic, oneDark, ...this.extensions]
-          : [ ...basic, ...this.extensions ]
+          ? [basicSetup, json(), oneDark, ...this.extensions]
+          : [basicSetup, json(), ...this.extensions]
 
         this.editor = new EditorView({ doc, parent, extensions })
+
+        if(this.readonly) {
+          parent.querySelector('.cm-content').setAttribute('contenteditable', false)
+        }
+
         this.editor.contentDOM.onblur = () => {
           try {
             const doc = this.editor.state.doc.toString()
-            const val = this.codec === true ? JSON.parse(doc) : doc
+            const val = (doc && this.codec) === true ? JSON.parse(doc) : doc
             this.$emit('update:modelValue', val)
             this.$emit('change', val)
             this.$emit('error', false)
+            this.error = false
           } catch (error) {
+            this.error = error
             this.$emit('error', error)
           }
         }
       } catch(error) {
+        this.error = error
         this.$emit('error', error)
       }
     }
@@ -86,5 +95,44 @@ export default {
 </script>
 
 <template>
-  <div :ref="ref" class="axolo-json-editor" />
+  <div class="axolo-json-editor">
+    <div :ref="ref" class="editor" />
+    <div class="tip">
+      <div v-if="placeholder" class="placeholder">{{ placeholder }}</div>
+      <div v-if="error" class="error">Error</div>
+    </div>
+  </div>
 </template>
+
+<style lang="scss" scoped>
+.axolo-json-editor {
+  width: 100%;
+  border: 1px solid #eee;
+  border-radius: 0.25em;
+  .editor {
+    :deep(.cm-content) {
+      font-family: Consolas, 'Courier New', Courier, monospace;
+      font-size: 0.9em;
+    }
+  }
+  .tip {
+    background-color: #eee;
+    padding: 0.25em 0.5em;
+    font-size: small;
+    display: flex;
+    border-bottom-left-radius: 0.25em;
+    border-bottom-right-radius: 0.25em;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1em;
+    .placeholder {
+      color: #777;
+      font-style: italic;
+    }
+    .error {
+      color: #f00;
+      font-weight: bold;
+    }
+  }
+}
+</style>

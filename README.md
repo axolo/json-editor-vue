@@ -1,6 +1,6 @@
 # @axolo/json-editor-vue
 
-A simple JSON editor of Vue.
+A simple JSON editor of Vue based on [CodeMirror](https://codemirror.net/) Version 6.
 
 ## Install
 
@@ -38,30 +38,19 @@ export default {
     @error="console.error"
   />
 </template>
-
-<style lang="scss">
-.cm-editor {
-  border-radius: 0.25em;
-  .cm-scroller {
-    border-radius: 0.25em;
-    font-size: 0.9em;
-    font-family: Consolas, monospace;
-  }
-}
-</style>
 ```
 
 ## Props
 
-|     Name      |         Type          | Default |          Description           |
-| ------------- | --------------------- | ------- | ------------------------------ |
-| `modelValue`  | `any`                 |         | JSON string, object, array ... |
-| `placeholder` | `String`              |         | placeholder                    |
-| `readonly`    | `Boolean`             | `false` | readonly                       |
-| `dark`        | `Boolean`             | `false` | dark theme as oneDark          |
-| `codec`       | `[Boolean, Array]`    | `false` | See [codec](#codec)            |
-| `format`      | `[Boolean, Function]` | `false` | See [format](#format) (TODO)   |
-| `extensions`  | `Array`               | `[]`    | extra codemirror extensions    |
+|     Name      |         Type          | Default |            Description             |
+| ------------- | --------------------- | ------- | ---------------------------------- |
+| `modelValue`  | `any`                 |         | JSON string, object, array ...     |
+| `placeholder` | `String`              |         | placeholder                        |
+| `readonly`    | `Boolean`             | `false` | readonly                           |
+| `dark`        | `Boolean`             | `false` | dark theme as oneDark              |
+| `codec`       | `[Boolean, Array]`    | `false` | See [codec](#codec)                |
+| `format`      | `[Boolean, Function]` | `false` | See [format](#format) (TODO)       |
+| `extensions`  | `Array`               | `[]`    | extra codemirror extensions (TODO) |
 
 ### codec
 
