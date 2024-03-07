@@ -96,8 +96,8 @@ export default {
 
 <template>
   <div class="axolo-json-editor">
-    <div class="tip">
-      <div v-if="placeholder" class="placeholder">{{ placeholder }}</div>
+    <div v-if="placeholder" class="tip">
+      <div class="placeholder">{{ placeholder }}</div>
       <div v-if="error" class="error">Error</div>
     </div>
     <div :ref="ref" class="editor" />

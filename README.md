@@ -35,6 +35,7 @@ export default {
     codec
     dark
     placeholder="please input json"
+    @change="console.log"
     @error="console.error"
   />
 </template>

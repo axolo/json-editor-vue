@@ -37,7 +37,7 @@ export default {
     <h3>@axolo/json-editor-vue</h3>
 
     <div>
-      <button @click="doc">toggle doc</button>
+      <button @click="doc">change json</button>
     </div>
 
     <json-editor
@@ -58,6 +58,6 @@ export default {
 .json-editor {
   display: flex;
   flex-direction: column;
-  gap: 1em;
+  gap: 1rem;
 }
 </style>
